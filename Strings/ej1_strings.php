@@ -13,8 +13,6 @@
 
     echo "IP {$ip} en binario es {$binario}<br>";
     echo "IP {$ip2} en binario es {$binario2}";
-
-    
 ?>
 </BODY>
 </HTML>
