@@ -5,7 +5,6 @@
     $inicio = 1;
     $fin = 100;
 
-    
     $pares = 0;
     $impares = 0;
     $multiplosTres = 0;
