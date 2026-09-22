@@ -9,9 +9,11 @@
     $impares = 0;
     $multiplosTres = 0;
     $suma = 0;
+    $contadorNumeros = 0;
 
     for ($i = $inicio; $i <= $fin; $i++) {
 
+        $contadorNumeros++;
         $suma = $suma + $i;
 
         if ($i % 2 == 0) {
@@ -26,7 +28,7 @@
     }
 
     echo "Números del {$inicio} al {$fin}<br><br>";
-    echo "Cantidad de números: {$i}<br>";
+    echo "Cantidad de números: {$contadorNumeros}<br>";
     echo "Números pares: {$pares}<br>";
     echo "Números impares: {$impares}<br>";
     echo "Multiplos de 3: {$multiplosTres}<br>";
