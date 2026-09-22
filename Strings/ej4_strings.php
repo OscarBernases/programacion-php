@@ -7,8 +7,10 @@
     $tituloGuiones = str_replace(" ", "-", $titulo);
     $tituloMinusculas = strtolower($tituloGuiones);
 
-    echo "FORMA 1: http://" . strtolower($tituloGuiones) . "/<br>";
-    echo "FORMA 2: http://" . $tituloMinusculas . "/";
+    $tituloSinTilde = str_replace("ó", "o", $tituloGuiones);
+    $tituloSinTilde = str_replace("ó", "o", $tituloMinusculas);
+    echo "FORMA 1: http://" . strtolower($tituloSinTilde) . "/<br>";
+    echo "FORMA 2: http://" . $tituloSinTilde . "/";
 ?>
 </BODY>
 </HTML>
