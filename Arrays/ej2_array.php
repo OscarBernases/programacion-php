@@ -9,9 +9,22 @@
 
     for ($i = 0; $i < count($temperaturas); $i++) {
         $dia = $i + 1;
-        echo "<tr><td>{$dia}</td><td>{$temperaturas[$i]}</td><td>0</td></tr>";
+
+        if ($i == 0) {
+            $diferencia = 0;
+        } else {
+            $diferencia = $temperaturas[$i] - $temperaturas[$i - 1];
+        }
+
+        echo "<tr><td>{$i}</td><td>{$temperaturas[$i]}</td><td>{$diferencia}</td></tr>";
     }
     echo "</table>";
+
+    
+    // VER TEMPERATURA MAXIMA
+    // VER TEMPERATURA MINIMA
+    // TEMPERATURA MEDIA
+    // NUMERO DIAS ENCIMA MEDIA
 ?>
 </BODY>
 </HTML>
