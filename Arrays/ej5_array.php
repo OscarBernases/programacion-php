@@ -1,5 +1,5 @@
 <HTML>
-<HEAD><TITLE> EJ4 Arrays</TITLE></HEAD>
+<HEAD><TITLE> EJ5 Arrays</TITLE></HEAD>
 <BODY>
 <?php
 
