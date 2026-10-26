@@ -7,6 +7,20 @@ function limpiarCampos($campo) {
   return $campo;
 }
 
+function comprobarCampo($campo, &$error, $obligatorio = true) {
+  $valor = "";
+
+  if (!isset($_POST[$campo]) || trim($_POST[$campo]) === "") {
+    if ($obligatorio) {
+      $error = "Campo obligatorio.";
+    }
+  } else {
+    $valor = limpiarCampos($_POST[$campo]);
+  }
+
+    return $valor;
+}
+
 
 function visualizar($nombre, $apellido1, $apellido2, $email, $sexo) {
   
