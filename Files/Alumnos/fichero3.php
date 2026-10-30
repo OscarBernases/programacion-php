@@ -17,16 +17,19 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         $fichero = fopen("alumnos1.txt", "r");
+        $contador = 0;
 
         echo "<table>";
         echo "<tr><th>Nombre</th><th>Apellido 1</th><th>Apellido 2</th><th>Fecha nacimiento</th><th>Localidad</th></tr>";
 
         while (($linea = fgets($fichero)) !== false) {
             mostrarAlumno($linea);
+            $contador++;
         }
 
         echo "</table>";
-        
+        echo "Existen {$contador} lineas en el fichero."; 
+
         fclose($fichero);
     }
     ?>
