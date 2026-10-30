@@ -25,4 +25,21 @@ function guardarAlumno($nombre, $apellido1, $apellido2, $fecha, $localidad) {
 
 }
 
+function mostrarAlumno($linea) {
+
+  $nombre    = trim(substr($linea, 0, 40)); 
+  $apellido1 = trim(substr($linea, 40, 41));
+  $apellido2 = trim(substr($linea, 81, 42));
+  $fecha     = trim(substr($linea, 123, 10));
+  $localidad = trim(substr($linea, 133, 27));
+
+  echo "<tr>";
+  echo "<td>{$nombre}</td>";
+  echo "<td>{$apellido1}</td>";
+  echo "<td>{$apellido2}</td>";
+  echo "<td>{$fecha}</td>";
+  echo "<td>{$localidad}</td>";
+  echo "</tr>";
+}
+
 ?>
