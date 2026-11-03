@@ -27,10 +27,10 @@ function guardarAlumno($nombre, $apellido1, $apellido2, $fecha, $localidad) {
 
 function mostrarAlumno($linea) {
 
-  $nombre    = trim(substr($linea, 0, 40)); 
+  $nombre = trim(substr($linea, 0, 40)); 
   $apellido1 = trim(substr($linea, 40, 41));
   $apellido2 = trim(substr($linea, 81, 42));
-  $fecha     = trim(substr($linea, 123, 10));
+  $fecha = trim(substr($linea, 123, 10));
   $localidad = trim(substr($linea, 133, 27));
 
   echo "<tr>";
@@ -61,7 +61,7 @@ function visualizarFicheroOperacion($fichero, $operacion, $numLinea, $numPrimera
     $totalLineas = count($lineas);
 
     // Visualizar
-    echo "<h2>Contenido del fichero:</h2>";
+    echo "<h3>Contenido del fichero:</h3>";
 
     switch ($operacion) {
 
@@ -86,6 +86,27 @@ function visualizarFicheroOperacion($fichero, $operacion, $numLinea, $numPrimera
         break;
     }
   }
+}
+
+function visualizarDatosFichero($fichero) {
+
+  if (comprobarFichero($fichero) === true) {
+    $nombre = pathinfo($fichero, PATHINFO_BASENAME);
+    $ruta = realpath($fichero);
+    $tamaño = filesize($fichero);
+    $ultimoAcceso = date("d/m/y", fileatime($fichero));
+    $ultimaModificacion =  date("d/m/y", filectime($fichero));
+    $tipo = pathinfo($fichero, PATHINFO_EXTENSION);
+
+    echo "<h3>Datos del fichero:</h3>";
+    echo "Nombre: {$nombre}<br>";
+    echo "Ruta: {$ruta}<br>";
+    echo "Tamaño: {$tamaño} bytes<br>";
+    echo "Ultimo Acceso: {$ultimoAcceso}<br>";
+    echo "Ultima Modificación: {$ultimaModificacion}<br>";
+    echo "Tipo: {$tipo}";
+  }
+  
 }
 
 ?>
