@@ -42,4 +42,50 @@ function mostrarAlumno($linea) {
   echo "</tr>";
 }
 
+function comprobarFichero($fichero) {
+
+  if(!file_exists($fichero)){
+    
+    echo "Error el fichero {$fichero} no existe";
+    return false;
+  } else {
+    return true;
+  }
+
+}
+
+function visualizarFicheroOperacion($fichero, $operacion, $numLinea, $numPrimeras) {
+
+  if (comprobarFichero($fichero) === true) {
+    $lineas = file($fichero);
+    $totalLineas = count($lineas);
+
+    // Visualizar
+    echo "<h2>Contenido del fichero:</h2>";
+
+    switch ($operacion) {
+
+      case "todo":
+        foreach($lineas as $linea){
+          echo "{$linea}<br>";
+        }
+        break;
+
+      case "linea":
+        if($numLinea >= 1 && $numLinea <= $totalLineas){
+          echo "{$lineas[$numLinea-1]}";
+        } else {
+          echo "Error: El fichero solamente tiene {$totalLineas} lineas";
+        }
+        break;
+
+      case "primeras":
+        for ($i=0; $i < $numPrimeras && $i < $totalLineas; $i++) { 
+            echo "{$lineas[$i]}<br>";
+        }
+        break;
+    }
+  }
+}
+
 ?>
