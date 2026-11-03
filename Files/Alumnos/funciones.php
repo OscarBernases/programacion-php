@@ -66,8 +66,8 @@ function visualizarFicheroOperacion($fichero, $operacion, $numLinea, $numPrimera
     switch ($operacion) {
 
       case "todo":
-        foreach($lineas as $linea){
-          echo "{$linea}<br>";
+        for ($i=0; $i < $totalLineas; $i++) { 
+          echo "Linea {$i}: {$lineas[$i]}<br>";
         }
         break;
 
