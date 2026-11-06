@@ -21,6 +21,11 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         $fichero = "ibex35.txt";
+
+        if (file_exists($fichero) === false) {
+            trigger_error("El fichero no existe.");
+        }
+
         $buscado = strtoupper(limpiarCampos($_POST["valor"]));
         buscarValor($fichero, $buscado);
     }
