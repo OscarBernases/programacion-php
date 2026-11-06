@@ -10,6 +10,11 @@
     include "funciones.php";
 
     $fichero = "ibex35.txt";
+    
+    if (file_exists($fichero) === false) {
+        throw new Exception("El fichero {$fichero} no existe");
+    }
+
     visualizarFicheroSinHora($fichero);
     
     ?>
