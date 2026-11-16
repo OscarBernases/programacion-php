@@ -42,16 +42,14 @@ function obtenerPuntuacionCarta($num) {
     }
 }
 
-function sacarCartas(&$baraja, $numCartas, $nombresJugadores) {
-    $manos = [];
-    foreach ($nombresJugadores as $jugador) {
+function sacarCartas(&$baraja, $numCartas, &$jugadores) {
+    foreach ($jugadores as $jugador => &$datos) {
         $manoJugador = [];
         for ($j = 0; $j < $numCartas; $j++) {
             $manoJugador[] = array_pop($baraja);
         }
-        $manos[$jugador] = $manoJugador;
+        $datos['mano'] = $manoJugador;
     }
-    return $manos;
 }
 
 function calcularPuntuacion($mano) {
@@ -62,5 +60,32 @@ function calcularPuntuacion($mano) {
     }
 
     return $total;
+}
+
+function mostrarTablaResultados($jugadores) {
+    echo '<table class="score">';
+    echo '<thead><tr><th>Jugador</th><th>Cartas obtenidas</th><th>Puntos</th></tr></thead>';
+    echo '<tbody>';
+
+    foreach ($jugadores as $nombre => $datos) {
+        echo '<tr>';
+        echo '<td>' . htmlspecialchars($nombre) . '</td>';
+        echo '<td>' . mostrarCartasJugador($datos['mano']) . '</td>';
+        echo '<td>' . calcularPuntuacion($datos['mano']) . '</td>';
+        echo '</tr>';
+    }
+
+    echo '</tbody>';
+    echo '</table>';
+}
+
+function mostrarCartasJugador($mano) {
+    $html = '';
+    
+    foreach ($mano as $carta) {
+        $html = $html . '<img src="images/' . $carta . '.png" style="width: 60px; height: auto; margin-right: 5px;">';
+    }
+
+    return $html;
 }
 ?>
