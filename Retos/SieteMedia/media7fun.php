@@ -49,6 +49,7 @@ function sacarCartas(&$baraja, $numCartas, &$jugadores) {
             $manoJugador[] = array_pop($baraja);
         }
         $datos['mano'] = $manoJugador;
+        $datos['puntos'] = calcularPuntuacion($manoJugador);
     }
 }
 
@@ -62,21 +63,86 @@ function calcularPuntuacion($mano) {
     return $total;
 }
 
+function jugar(&$jugadores) {
+
+    $boteTotal = 0;
+    $mejorPuntuacion = 0;
+    $ganadores = [];
+
+    foreach ($jugadores as $nombre => &$datos) {
+        $puntos = $datos['puntos'];
+        $datos['puntos'] = $puntos;
+        $datos['ganador'] = false;
+        $datos['premio'] = 0;
+
+        $apuesta = $datos['apuesta'];
+        $datos['apuesta'] = $apuesta;
+        $boteTotal = $boteTotal + $apuesta;
+
+        if ($puntos > $mejorPuntuacion) {
+            $mejorPuntuacion = $puntos;
+            $ganadores = [$nombre];
+        } elseif ($puntos === $mejorPuntuacion && $mejorPuntuacion > 0) {
+            $ganadores[] = $nombre;
+        }
+    }
+
+    // Reparto proporcional a la apuesta entre los ganadores (o a partes iguales si todos apostaron 0)
+
+    $sumaApuestasGanadores = 0;
+
+    foreach ($ganadores as $nombreGanador) {
+        $sumaApuestasGanadores = $sumaApuestasGanadores + $jugadores[$nombreGanador]['apuesta'];
+    }
+
+    foreach ($ganadores as $nombreGanador) {
+        $jugadores[$nombreGanador]['ganador'] = true;
+
+        if ($sumaApuestasGanadores > 0) {
+            $proporcion = $jugadores[$nombreGanador]['apuesta'] / $sumaApuestasGanadores;
+            $jugadores[$nombreGanador]['premio'] = round($boteTotal * $proporcion, 2);
+        } else {
+            $jugadores[$nombreGanador]['premio'] = round($boteTotal / count($ganadores), 2);
+        }
+    }
+
+    $premioPorGanador = !empty($ganadores) ? $jugadores[$ganadores[0]]['premio']: 0;
+
+    return [
+        'bote' => $boteTotal,
+        'ganadores' => $ganadores,
+        'mejorPuntuacion' => $mejorPuntuacion,
+        'premioPorGanador' => $premioPorGanador,
+    ];
+}
+
 function mostrarTablaResultados($jugadores) {
+    echo '<div class="tablewrap">';
     echo '<table class="score">';
-    echo '<thead><tr><th>Jugador</th><th>Cartas obtenidas</th><th>Puntos</th></tr></thead>';
+    echo '<thead><tr><th>Jugador</th><th>Cartas obtenidas</th><th>Puntuación</th><th>Premio</th></tr></thead>';
     echo '<tbody>';
 
     foreach ($jugadores as $nombre => $datos) {
-        echo '<tr>';
+        $puntos = $datos['puntos'];
+        $esGanador = !empty($datos['ganador']);
+        $claseFila = $esGanador ? ' class="win"' : '';
+        $premioFormateado = formatearEuros($datos['premio'] ?? 0);
+
+        echo '<tr' . $claseFila . '>';
         echo '<td>' . htmlspecialchars($nombre) . '</td>';
         echo '<td>' . mostrarCartasJugador($datos['mano']) . '</td>';
-        echo '<td>' . calcularPuntuacion($datos['mano']) . '</td>';
+        echo '<td>' . $puntos . '</td>';
+        echo '<td>' . $premioFormateado . '</td>';
         echo '</tr>';
     }
 
     echo '</tbody>';
     echo '</table>';
+    echo '</div>';
+}
+
+function formatearEuros($cantidad) {
+    return number_format((float) $cantidad, 2, ',', '.') . ' €';
 }
 
 function mostrarCartasJugador($mano) {
